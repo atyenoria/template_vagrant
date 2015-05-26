@@ -26,22 +26,40 @@ if [ ! -e '/home/vagrant/.rbenv' ]; then
 fi
 
 
+# #ruby インストール
+# if [ ! -e '/home/vagrant/.rbenv/plugins/ruby-build' ]; then
+#     sudo yum -y install openssl-devel
+#     sudo yum -y install ImageMagick-devel
+#     sudo yum -y install libxml2-devel
+#     sudo yum -y install libxslt-devel
+
+#     echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
+
+#     source ~/.bashrc
+#     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+#     rbenv install 2.0.0-p481
+#     rbenv global 2.0.0-p481
+
+#     git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+#     gem install bundler
+#     gem install reditor
+#     gem install execjs
+# fi
+
 #ruby インストール
-if [ ! -e '/home/vagrant/.rbenv/plugins/ruby-build' ]; then
-    sudo yum -y install openssl-devel
-    sudo yum -y install ImageMagick-devel
-    sudo yum -y install libxml2-devel
-    sudo yum -y install libxslt-devel
+git clone https://github.com/riywo/anyenv ~/.anyenv
+echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(anyenv init -)"' >> ~/.bash_profile
+exec $SHELL -l
+anyenv install rbenv
+exec $SHELL -l
 
-    echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
+rbenv install -v 2.1.2
+sudo yum -y install openssl openssl-devel
+rbenv global 2.1.2
 
-    source ~/.bashrc
-    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-    rbenv install 2.0.0-p481
-    rbenv global 2.0.0-p481
+gem update --system
+gem install rails --no-ri --no-rdoc -V
+rbenv rehash
+rails -v
 
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-    gem install bundler
-    gem install reditor
-    gem install execjs
-fi
